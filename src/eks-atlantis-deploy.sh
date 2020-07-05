@@ -23,6 +23,7 @@ helm install atlantis stable/atlantis -f src/atlantis-values.yaml
 # Retrieve ELB domain name with cool down for AWS provisioning
 sleep 30
 export ATLANTIS_URL=$(kubectl describe service atlantis | grep LoadBalancer\ Ingress | sed -e 's/.*://' | tr -d '[:blank:]')
+export TIMESTAMP=$(date)
 
 # Populate JSON payloads for deploying Github <--> Atlantis webhook and pull request
 envsubst < src/github-webhook.json.template > src/github-webhook.json

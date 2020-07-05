@@ -20,6 +20,7 @@ docker run  -v "$(pwd)":/mnt \
             -e GITHUB_USER=nodzu \
             -e GITHUB_TOKEN= \
             -e GITHUB_API_URL=https://api.github.com/repos/nodzu/eks-atlantis \
+            -e GIT_BRANCH=feature/service-accounts \
             -it armpits/eks-workstation:latest /bin/bash -c "./src/eks-atlantis-deploy.sh"
 ```
 
