@@ -5,13 +5,12 @@ terraform init
 terraform plan
 terraform apply
 
-# Cool down for AWS provisioning of EKS resources then re-run for config map application
-sleep 120
-terraform plan
-terraform apply -auto-approve
-
 # kubectl <--> eks config update
 aws eks --region eu-north-1 update-kubeconfig --name eks-nodzu-cluster-1
+
+# Cool down for AWS provisioning of EKS resources then re-run for config map application
+terraform plan
+terraform apply -auto-approve
 
 # Generate Github webhook secret
 export WEBHOOK_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
