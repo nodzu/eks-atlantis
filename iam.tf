@@ -126,3 +126,23 @@ resource "kubernetes_config_map" "rbac-iam-read-only-config-map" {
 ROLES
   }
 }
+
+# Service Account
+
+resource "kubernetes_service_account" "eks-rbac-sa-admin" {
+  metadata {
+    name = "${var.eks-service-account-admin}"
+    annotations = {
+      "eks.amazonaws.com/role-arn" = "${aws_iam_role.eks-admin-role.arn}"
+    }
+  }
+}
+
+resource "kubernetes_service_account" "eks-rbac-sa-read-only" {
+  metadata {
+    name = "${var.eks-service-account-read-only}"
+    annotations = {
+      "eks.amazonaws.com/role-arn" = "${aws_iam_role.eks-read-only-role.arn}"
+    }
+  }
+}

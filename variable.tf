@@ -48,6 +48,11 @@ variable "eks-admin-role" {
   default = "eks-admin"
 }
 
+variable "eks-ops-admin-role" {
+  description = "EKS admin role name"
+  default = "eks-ops-admin"
+}
+
 variable "eks-admin-config-map" {
   description = "EKS admin role name"
   default = "nodzu-admin"
@@ -58,9 +63,14 @@ variable "eks-read-only-config-map" {
   default = "nodzu-read-only"
 }
 
-variable "eks-ops-admin-role" {
-  description = "EKS admin role name"
-  default = "eks-ops-admin"
+variable "eks-service-account-admin" {
+  description = "K8s admin service account"
+  default = "nodzu-service-account-admin"
+}
+
+variable "eks-service-account-read-only" {
+  description = "K8s read-only service account"
+  default = "nodzu-service-account-read-only"
 }
 
 variable "eks-cluster-1" {
