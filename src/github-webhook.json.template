@@ -1,0 +1,16 @@
+{
+  "name": "web",
+  "active": true,
+  "events": [
+    "push",
+    "pull_request",
+    "pull_request_review",
+    "issue_comment"
+  ],
+  "config": {
+    "url": "http://${ATLANTIS_URL}/events",
+    "content_type": "json",
+    "secret": "${WEBHOOK_SECRET}",
+    "insecure_ssl": "1"
+  }
+}
