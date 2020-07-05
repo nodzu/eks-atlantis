@@ -89,6 +89,11 @@ variable "eks-ng-1-instance-type" {
   default = "t3.small"
 }
 
+variable "eks-ng-1-disk-size" {
+  description = "EKS node group 1 disk size"
+  default = "8"
+}
+
 variable "eks-asg-1-min" {
   description = "Auto-scaling group minimum instance count"
   default = "1"
