@@ -19,10 +19,11 @@ docker run  -v "$(pwd)":/mnt \
             -e GITHUB_USER=nodzu \
             -e GITHUB_TOKEN= \
             -e GITHUB_API_URL=https://api.github.com/repos/nodzu/eks-atlantis \
+            -e GIT_BRANCH=feature/service-accounts \
             -it armpits/eks-workstation:latest /bin/bash -c "./src/eks-atlantis-deploy.sh"
 ```
 
-If all the necessary tools (Terraform, awscli, kubectl, Helm, envsubst, curl) are already on your workstation you can simply execute the bash script directly from your workstation. Pass in the environment variables listed above (-e flags) by your preferred method, and set your source directory as the base directory of this repository.  
+If all the necessary tools (Terraform, awscli, kubectl, Helm, envsubst, curl) are already on your workstation you can simply execute the bash script directly. Pass in the environment variables listed above (-e flags) by your preferred method, and set your source directory as the base directory of this repository.  
 
 The Docker image is a quick build, so if you want to avoid the Docker Hub hosted image just build from the provided src/Dockerfile and proceed using the docker run command above.  
 
@@ -34,7 +35,7 @@ The actions being performed to complete the demo are:
 3. Re-run Terraform plan/apply (non-interactive) to apply Kubernetes config maps.
 4. Generate webhook secret and populate Atlantis values.yaml.
 5. Install Atlantis with Helm.
-6. Retrieve load balancer domain name from Atlantis deployment and use this in populating JSON payload for creating the Github webhook (another cooldown happens first to allow the load balancer provisioning and DNS propagation to finish); post JSON to create repository webhook.
+6. Retrieve load balancer domain name from Atlantis deployment and use this in populating JSON payload for creating the Github webhook (two minute cooldown happens first to allow the load balancer provisioning and DNS propagation to finish); post JSON to create repository webhook.
 7. Populate JSON payload for creating Github pull request and post it to create pull request with existing feature branch. 
 
 ### Verification 
@@ -72,21 +73,23 @@ If you have direct access to the repository the events associated with the webho
 curl --user "nodzu" https://api.github.com/repos/nodzu/eks-atlantis/events | grep Plan
 ```
 
-Events such as the following show connectivity between Github and Atlantis: 
+Events like the following snippet show Github receiving Atlantis calls: 
 
 ```
-        "created_at": "2020-07-05T19:37:34Z",
-        "updated_at": "2020-07-05T19:37:34Z",
-        "author_association": "OWNER",
-        "body": "Ran Plan for dir: `.` workspace: `default`
+...
+"created_at": "2020-07-05T19:37:34Z",
+"updated_at": "2020-07-05T19:37:34Z",
+"author_association": "OWNER",
+"body": "Ran Plan for dir: `.` workspace: `default`
+...
 ```
 
 ### Clean-up
 
-Included is a simple clean-up script to make this process another docker run one-liner. Note that all helm associated resources need to be deleted first for a successful terraform destroy. The script handles this. 
+Included is a simple clean-up script to make this process another docker-run-one-liner. Note that all helm associated resources need to be deleted first for a successful terraform destroy. The script handles this. 
 
 ```
 docker run  -v "$(pwd)":/mnt \
             -v ~/.aws:/root/ \
-            -it armpits/eks-workstation:latest /bin/bash -c "./clean-up.sh"
+            -it armpits/eks-workstation:latest /bin/bash -c "./src/clean-up.sh"
 ```

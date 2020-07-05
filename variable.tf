@@ -1,5 +1,12 @@
+# VPC
+
 variable "environment-tag" {
   description = "Environment tag"
+  default = "eu-north-1"
+}
+
+variable "aws-region" {
+  description = "AWS Region"
   default = "nodzu"
 }
 
@@ -38,6 +45,8 @@ variable "security-group-2" {
   default = "nodzu-lb-sg-1"
 }
 
+# IAM and RBAC
+
 variable "eks-read-only-role" {
   description = "EKS read-only role name"
   default = "eks-read-only"
@@ -63,6 +72,8 @@ variable "eks-ops-admin-role" {
   default = "eks-ops-admin"
 }
 
+# EKS
+
 variable "eks-cluster-1" {
   description = "EKS cluster name"
   default = "eks-nodzu-cluster-1"
@@ -78,7 +89,17 @@ variable "eks-ng-1-instance-type" {
   default = "t3.small"
 }
 
-variable "eks-ng-1-disk-size" {
-  description = "EKS node group 1 disk size"
-  default = "8"
+variable "eks-asg-1-min" {
+  description = "Auto-scaling group minimum instance count"
+  default = "1"
+}
+
+variable "eks-asg-1-max" {
+  description = "Auto-scaling group maximum instance count"
+  default = "2"
+}
+
+variable "eks-asg-1-desired" {
+  description = "Auto-scaling group desired instance count"
+  default = "1"
 }

@@ -23,9 +23,9 @@ resource "aws_eks_node_group" "eks-ng-1" {
     Name = "${var.environment-tag}"
   }
   scaling_config {
-    desired_size = 1
-    max_size     = 2 
-    min_size     = 1
+    desired_size = "${var.eks-asg-1-desired}"
+    max_size     = "${var.eks-asg-1-max}"
+    min_size     = "${var.eks-asg-1-min}"
   }
   depends_on = [
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,

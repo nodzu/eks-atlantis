@@ -8,7 +8,7 @@ terraform apply
 # kubectl <--> eks config update
 aws eks --region eu-north-1 update-kubeconfig --name eks-nodzu-cluster-1
 
-# Cool down for AWS provisioning of EKS resources then re-run for config map application
+# Re-run for config map application after kubectl update
 terraform plan
 terraform apply -auto-approve
 
