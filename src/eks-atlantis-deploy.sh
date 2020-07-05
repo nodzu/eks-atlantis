@@ -6,9 +6,9 @@ terraform plan
 terraform apply
 
 # Cool down for AWS provisioning of EKS resources then re-run for config map application
-sleep 30
+sleep 120
 terraform plan
-terraform apply
+terraform apply -auto-approve
 
 # kubectl <--> eks config update
 aws eks --region eu-north-1 update-kubeconfig --name eks-nodzu-cluster-1
@@ -21,7 +21,7 @@ envsubst < src/atlantis-values.yaml.template > src/atlantis-values.yaml
 helm install atlantis stable/atlantis -f src/atlantis-values.yaml
 
 # Retrieve ELB domain name with cool down for AWS provisioning
-sleep 30
+sleep 120
 export ATLANTIS_URL=$(kubectl describe service atlantis | grep LoadBalancer\ Ingress | sed -e 's/.*://' | tr -d '[:blank:]')
 export TIMESTAMP=$(date)
 
