@@ -2,12 +2,12 @@
 
 variable "environment-tag" {
   description = "Environment tag"
-  default = "eu-north-1"
+  default = "nodzu"
 }
 
 variable "aws-region" {
   description = "AWS Region"
-  default = "nodzu"
+  default = "eu-north-1"
 }
 
 variable "cidr-vpc-1" {
