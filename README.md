@@ -1,4 +1,4 @@
-# nodzu
+## eks-atlantis
 
 This is a short demo on using Terraform to provision an EKS cluster and using Helm to install the Atlantis application for managing Terraform. The Demo is orchestrated with a pre-built Docker image containing all the tools to complete the deployment. The source Dockerfile is located in the /src directory. All infrastructure management is handled by Terraform. The bash helper script
 executed with the docker run command populates configs and payloads which are used to deploy Atlantis and test the Github integration. RBAC access is achieved by mapping IAM roles with a Kubernetes config map. 
@@ -14,13 +14,13 @@ executed with the docker run command populates configs and payloads which are us
 The demo is executed by mounting the repository to /mnt inside the Docker container and running the `eks-atlantis-deploy.sh` script. All dependencies are contained within the Docker image, this repository, and as runtime environment variables. To deploy, issue the following command while in the base directory of the repository:
 
 ```
-docker run  -v "$(pwd)":/mnt \
-            -v ~/.aws:/root/ \
-            -e GITHUB_USER=nodzu \
-            -e GITHUB_TOKEN= \
-            -e GITHUB_API_URL=https://api.github.com/repos/nodzu/eks-atlantis \
-            -e GIT_BRANCH=feature/service-accounts \
-            -it armpits/eks-workstation:latest /bin/bash -c "./src/eks-atlantis-deploy.sh"
+docker run -v "$(pwd)":/mnt \
+           -v ~/.aws:/root/ \
+           -e GITHUB_USER=nodzu \
+           -e GITHUB_TOKEN= \
+           -e GITHUB_API_URL=https://api.github.com/repos/nodzu/eks-atlantis \
+           -e GIT_BRANCH=feature/service-accounts \
+           -it armpits/eks-workstation:latest /bin/bash -c "./src/eks-atlantis-deploy.sh"
 ```
 
 If all the necessary tools (Terraform, awscli, kubectl, Helm, envsubst, curl) are already on your workstation you can simply execute the bash script directly. Pass in the environment variables listed above (-e flags) by your preferred method, and set your source directory as the base directory of this repository.  
@@ -47,9 +47,9 @@ Inspect results on Atlantis and Github to confirm the deployment worked.
 To verify things are working on Atlantis' side check out the logs with kubectl. The same Docker image can be used as follows: 
 
 ```
-docker run  -v "$(pwd)":/mnt \
-            -v ~/.aws:/root/ \
-            -it armpits/eks-workstation:latest /bin/bash -c "kubectl logs atlantis-0"
+docker run -v "$(pwd)":/mnt \
+           -v ~/.aws:/root/ \
+           -it armpits/eks-workstation:latest /bin/bash -c "kubectl logs atlantis-0"
 ```  
 
 The pull request creation from the initial deploy can be seen in Atlantis logs: 
@@ -89,7 +89,7 @@ Events like the following snippet show Github receiving Atlantis calls:
 Included is a simple clean-up script to make this process another docker-run-one-liner. Note that all helm associated resources need to be deleted first for a successful terraform destroy. The script handles this. 
 
 ```
-docker run  -v "$(pwd)":/mnt \
-            -v ~/.aws:/root/ \
-            -it armpits/eks-workstation:latest /bin/bash -c "./src/clean-up.sh"
+docker run -v "$(pwd)":/mnt \
+           -v ~/.aws:/root/ \
+           -it armpits/eks-workstation:latest /bin/bash -c "./src/clean-up.sh"
 ```

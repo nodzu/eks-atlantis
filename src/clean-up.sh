@@ -4,4 +4,4 @@
 helm ls --all --short | xargs helm delete
 
 # Terraform destroy (interactive input)
-terraform destroy
+terraform destroy -auto-approve
