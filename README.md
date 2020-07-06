@@ -29,7 +29,7 @@ The Docker image is a quick build, so if you want to avoid the Docker Hub hosted
 
 ### Deployment Steps
 
-The demo is set up to be a turn-key execution using `eks-atlantis-deploy.sh`. Running the script with the Docker container or directly is the only action needed on your part to complete the deploy. The steps being performed by the `eks-atlantis-deploy.sh' script are:
+The demo is set up to be a turn-key execution using `eks-atlantis-deploy.sh`. Running the script with the Docker container or directly is the only action needed on your part to complete the deploy. The steps being performed by the `eks-atlantis-deploy.sh` script are:
 1. Terraform init/plan/apply.
 2. Awscli eks command to bring in config for kubectl (necessary for Kubernetes modules and Helm).
 3. Re-run Terraform plan/apply (non-interactive) to apply Kubernetes config maps.
