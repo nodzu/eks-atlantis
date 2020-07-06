@@ -11,13 +11,13 @@ executed with the docker run command populates configs and payloads which are us
 
 ### Usage
 
-The demo is executed by mounting the repository to /mnt inside the Docker container and running the `eks-atlantis-deploy.sh` script. All dependencies are contained within the Docker image, this repository, and as runtime environment variables. To deploy, issue the following command while in the base directory of the repository:
+The demo is executed by mounting the repository to /mnt inside the Docker container and running the `eks-atlantis-deploy.sh` script. All dependencies are contained within the Docker image, this repository, and as runtime environment variables. To deploy, add a valid personal access token to the following command and execute from the base directory of this repository:
 
 ```
 docker run -v "$(pwd)":/mnt \
            -v ~/.aws:/root/ \
            -e GITHUB_USER=nodzu \
-           -e GITHUB_TOKEN= \
+           -e GITHUB_TOKEN=${SECRET} \
            -e GITHUB_API_URL=https://api.github.com/repos/nodzu/eks-atlantis \
            -e GIT_BRANCH=feature/service-accounts \
            -it armpits/eks-workstation:latest /bin/bash -c "./src/eks-atlantis-deploy.sh"
