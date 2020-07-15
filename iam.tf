@@ -104,6 +104,7 @@ resource "kubernetes_config_map" "rbac-iam-admin-config-map" {
 - rolearn: ${aws_iam_role.eks-admin-role.arn}
   username: system:node:{{EC2PrivateDNSName}}
   groups:
+    - system:masters
     - system:bootstrappers
     - system:nodes
 ROLES
@@ -121,8 +122,8 @@ resource "kubernetes_config_map" "rbac-iam-read-only-config-map" {
 - rolearn: ${aws_iam_role.eks-read-only-role.arn}
   username: system:node:{{EC2PrivateDNSName}}
   groups:
-    - system:bootstrappers
-    - system:nodes
+    - system:basic-user
+    - system:discovery
 ROLES
   }
 }
